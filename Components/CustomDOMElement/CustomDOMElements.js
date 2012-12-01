@@ -10,8 +10,6 @@ scope = scope || {};
 
 // imports
 
-var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-
 var ShadowDOM = scope.ShadowDOM;
 
 // custom element definition registry (name: definition)
@@ -42,10 +40,6 @@ var initialize = function(inElement, inDefinition) {
 var finalize = function(inElement, inDefinition) {
   // flag to prevent re-upgrades
   inElement.__upgraded__ = true;
-  // TODO(sorvell): OFF SPEC: include path so that resources may
-  // be loaded relative to definition location
-  // e.g. this.src = this.__path__ + '/images/foo.png'
-  inElement.__path__ = inDefinition.path || '';
   // TODO(sjmiles): OFF SPEC: attach 'is' attribute and property
   inElement.setAttribute("is", inDefinition.name);
   inElement.is = inDefinition.name;
@@ -168,8 +162,8 @@ var observeAttributeChanges = function(inElement, inDefinition) {
   // the definition chain to find change handlers.
   //
   var lc = inDefinition.lifecycle;
-  if (lc.attributeChanged && MutationObserver){
-    var observer = new MutationObserver(function(mutations) {
+  if (lc.attributeChanged && window.WebKitMutationObserver){
+    var observer = new WebKitMutationObserver(function(mutations) {
       mutations.forEach(function(m) {
         lc.attributeChanged.call(inElement, m.attributeName,
           m.oldValue, m.target.getAttribute(m.attributeName));
@@ -279,7 +273,6 @@ var upgradeElement = function(inElement, inDefinition) {
   // TODO(sjmiles): OFFSPEC: it's more convenient for
   // polyfill to upgrade in-place, instead of creating
   // a new element.
-  
   initialize(upgrade, inDefinition);
   //
   // complete element setup (compute redistributions)
@@ -297,6 +290,7 @@ var upgradeElements = function(inTree, inDefinition) {
   // 6.b.1 Let NAME be the custom element name part of DEFINITION
   var name = inDefinition.name;
   // 6.b.2 For each element ELEMENT in TREE whose custom element name is NAME:
+  // TODO(sjmiles): use polymorphic tree search
   var elements = ShadowDOM.localQueryAll(inTree, name);
   for (var i=0, element; element=elements[i]; i++) {
     // when an element is upgraded, its children are upgraded. This makes
@@ -319,16 +313,14 @@ var	upgradeAll = function(inNode) {
 // polyfill UA parsing HTML by watching dom for changes via mutations observer
 // and upgrading if any are detected.
 var watchDOM = function(inNode) {
-  if (MutationObserver) {
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mxn){
-        if (mxn.addedNodes.length) {
-          upgradeAll(inNode);
-        }
-      });
+  var observer = new WebKitMutationObserver(function(mutations) {
+		mutations.forEach(function(mxn){
+			if (mxn.addedNodes.length) {
+				upgradeAll(inNode);
+			}
     });
-    observer.observe(inNode, {childList: true, subtree: true});
-  }
+  });
+  observer.observe(inNode, {childList: true, subtree: true});
 }
 
 // SECTION 7.1
