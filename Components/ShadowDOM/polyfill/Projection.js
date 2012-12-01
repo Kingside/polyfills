@@ -20,10 +20,17 @@ Projection.prototype = {
     }
   },
   add: function(inNode) {
-    // if a Changeling, add the baby instead
-    var n = inNode.baby || inNode;
-    if (n.parentNode) {
-      new Changeling(n).transplant(n);
+    var n = inNode;
+    // if n is already a Changeling, leave it be, we
+    // only project the baby anyway
+    if (n.baby) {
+      n = n.baby;
+    } else {
+      // create a Changeling placeholder for n in n's
+      // parent tree (if that tree exists)
+      if (n.parentNode) {
+        new Changeling(n).transplant(n);
+      }
     }
     appendExplodedChild(this.host, n);
   },
