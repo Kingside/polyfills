@@ -167,7 +167,7 @@ var distributePool = function(inPool, inRoot) {
     var olderRoot = inRoot.previousSibling;
     if (olderRoot) {
       // project the EXPLODED root-tree into <shadow>
-      new Projection(shadow).addNodes(olderRoot.insertions 
+      new Projection(shadow).addNodes(olderRoot.insertions
         || olderRoot.childNodes);
       distributePool(inPool, olderRoot);
     }
@@ -201,6 +201,7 @@ var flatten = function(inTree) {
 // exports
 
 scope.ShimShadowDOM = {
+  shim: true,
   ShadowRoot: ShadowRoot,
   distribute: function(inNode) {
     inNode.distribute();
