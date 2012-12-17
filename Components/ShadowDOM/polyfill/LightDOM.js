@@ -10,6 +10,8 @@ var LightDOM = function(inNode) {
   // move our children into the fragment
   moveChildren(inNode, inNode.lightDOM);
   // alter inNode's API
+  // no bueno on Safari (improper translation of IDL?)
+  /*
   inNode.composedNodes = inNode.childNodes;
   Object.defineProperties(inNode, {
     childNodes: {
@@ -18,6 +20,7 @@ var LightDOM = function(inNode) {
       }
     }
   });
+  */
   inNode.appendChild = function(inNode) {
     return this.lightDOM.appendChild(inNode);
   };
