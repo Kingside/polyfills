@@ -42,6 +42,12 @@ if (!scope.flags.runManually) {
   scope.run();
 }
 
+// temporary hack for template elements under shims
+
+window.addEventListener('WebComponentsReady', function() {
+   HTMLTemplateElement.decorateAll(document);
+});
+ 
 // we are using this object for cross-module support only
 // use 'export' directive to get a global reference
 // (see components-polyfill.js)
