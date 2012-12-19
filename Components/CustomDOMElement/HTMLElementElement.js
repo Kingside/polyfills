@@ -270,9 +270,8 @@ var elementParser = {
     } else {
       h.appendChild(s);
     }
-    if (scope.flags.unshadow) {
-      s.innerHTML = 'style { display: none !important; }\n';
-    }
+    // make sure stylesheets aren't rendered
+    s.innerHTML = 'style { display: none !important; }\n';
     this.hostSheet = s;
   }
 };
