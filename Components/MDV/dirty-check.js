@@ -8,7 +8,12 @@
     Model.dirtyCheck();
   };
   window.addEventListener('WebComponentsReady', function() {
-    check();
-    setInterval(check, 250);
+    // timeout keeps the profile clean
+    setTimeout(function() {
+      //console.profile('initial model dirty check');
+      check();
+      //console.profileEnd();
+    }, 0);
+    setInterval(check, 125);
   });
 })();
