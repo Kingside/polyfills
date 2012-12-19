@@ -71,6 +71,7 @@ var require = function(inSrc) {
 
 [
   "lib/lang.js",
+  "lib/dom_token_list.js",
   "ShadowDOM/shadowdom-polyfill.js",
   "ComponentDocuments/path.js",
   "ComponentDocuments/loader.js",
