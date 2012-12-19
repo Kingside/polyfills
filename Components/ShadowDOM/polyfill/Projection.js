@@ -41,8 +41,10 @@ Projection.prototype = {
         //   Changelings but do not project, per se. This whole situation
         //   is confusing and too ad hoc.
          
-        // backpointer for first transposition if we are projecting from shadow
-        n.changeling = n.changeling || c;
+        // set backpointer only if first transposition, or previous
+        // is invalid
+        n.changeling = n.changeling && n.changeling.parentNode ? 
+            n.changeling :  c;
       }
     }
     appendExplodedChild(this.host, n);
