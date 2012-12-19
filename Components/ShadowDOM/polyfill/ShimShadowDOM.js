@@ -148,7 +148,7 @@ var distribute = function() {
   // virtualize insertion points
   flatten(root);
   // project composed tree
-  new Projection(this).addNodes(root.composedNodes || root.childNodes);
+  new Projection(this).addNodes(root.composedNodes || root.childNodes, true);
 };
 
 var distributePool = function(inPool, inRoot) {
@@ -168,7 +168,7 @@ var distributePool = function(inPool, inRoot) {
     if (olderRoot) {
       // project the EXPLODED root-tree into <shadow>
       new Projection(shadow).addNodes(olderRoot.insertions
-        || olderRoot.childNodes);
+        || olderRoot.childNodes, true);
       distributePool(inPool, olderRoot);
     }
   }

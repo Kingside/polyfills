@@ -1,15 +1,12 @@
 (function(scope) {
   
-var Changeling = function(inNode) {
+var Changeling = function(inNode, inFromShadow) {
   var node = inNode.baby || inNode;
   var elt = document.createElement(node.tagName || "span");
   //elt.innerHTML = inNode.innerHTML;
   elt.textContent = '(changeling for ' + (node.tagName || "TEXT") + ')';
   elt.__proto__ = Changeling.prototype;
   elt.baby = node;
-  // TODO(sjmiles): dubious, a node can be in N trees 
-  // only track the first transposition
-  node.changeling = node.changeling || elt;
   return elt;
 };
 
