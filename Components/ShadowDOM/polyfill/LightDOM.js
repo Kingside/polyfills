@@ -6,7 +6,7 @@ var LightDOM = function(inNode) {
   // back-reference host
   inNode.lightDOM.host = inNode;
   // identify this fragment as lightDOM
-  inNode.lightDOM.lightDOM = true;
+  inNode.lightDOM.isLightDOM = true;
   // move our children into the fragment
   moveChildren(inNode, inNode.lightDOM);
   // alter inNode's API
