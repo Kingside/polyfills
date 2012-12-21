@@ -1,8 +1,13 @@
 (function(scope) {
 
+  function createShadowRoot(inElement) {
+    return inElement.webkitCreateShadowRoot ? inElement.webkitCreateShadowRoot() :
+      new WebKitShadowRoot(inElement);
+  }
+
 scope.WebkitShadowDOM = {
   ShadowRoot: function(inElement) {
-    var root = new WebKitShadowRoot(inElement);
+    var root = createShadowRoot(inElement);
     // TODO(sjmiles): .shadow, .host, .olderSubtree are supposed to be native,
     // at least for public ShadowDOMs
     root.olderSubtree = inElement.shadow;
