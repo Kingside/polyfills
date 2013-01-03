@@ -43,7 +43,7 @@ var Model = {};
     do {
       observedList.forEach(addNotification);
       startNotifications();
-    } while (notificationsMade)
+    } while (notificationsMade && !notificationQueueIsRunning)
   }
 
   // Notifications happen in this order:
