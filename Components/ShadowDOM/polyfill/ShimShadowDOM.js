@@ -148,8 +148,19 @@ var distribute = function() {
   // virtualize insertion points
   flatten(root);
   // project composed tree
-  new Projection(this).addNodes(root.composedNodes || root.childNodes, true);
+  new Projection(this).addNodes(root.composedNodes || root.childNodes);
 };
+
+var hostInsertions = function(insertion, nodes) {
+  // create back-pointers from inserted nodes to the insertion point
+  for (var i=0, n; n=nodes[i]; i++) {
+    if (n.host && n.host.tagName != 'CONTENT') {
+      console.warn("node already has host", n.host, insertion, n);
+    }
+    n.host = insertion;
+  }
+  new Projection(insertion).addNodes(nodes);
+}
 
 var distributePool = function(inPool, inRoot) {
   // distribute pool to <content> nodes
@@ -158,7 +169,7 @@ var distributePool = function(inPool, inRoot) {
     decorateInsertionPoint(insertion);
     var slctr = insertion.getAttribute("select");
     var nodes = extract(inPool, slctr);
-    new Projection(insertion).addNodes(nodes);
+    hostInsertions(insertion, nodes);
   });
   //
   // distribute older shadow to <shadow>
@@ -168,7 +179,7 @@ var distributePool = function(inPool, inRoot) {
     if (olderRoot) {
       // project the EXPLODED root-tree into <shadow>
       new Projection(shadow).addNodes(olderRoot.insertions
-        || olderRoot.childNodes, true);
+        || olderRoot.childNodes);
       distributePool(inPool, olderRoot);
     }
   }

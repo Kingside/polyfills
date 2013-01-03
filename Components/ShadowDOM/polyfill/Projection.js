@@ -34,9 +34,11 @@ Projection.prototype = {
         // TODO(sjmiles): ad hoc 
         //   we want a backpointer to the shadow DOM from the light DOM
         //   for event retargetting
+        //   
         //   we project from older shadows into younger shadows,
         //   and then from ultimate shadow to the render tree
         //   the position we want is the first time a node is projected.
+        //   
         //   Note: all projections are from shadow: insertion-hosts use 
         //   Changelings but do not project, per se. This whole situation
         //   is confusing and too ad hoc.
