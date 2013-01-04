@@ -56,7 +56,7 @@ if (!scope.flags) {
 }
 
 if (!scope.flags.shadow) {
-  scope.flags.shadow = window.WebKitShadowRoot ? 'webkit' : 'shim';
+  scope.flags.shadow = 'shim'; //window.WebKitShadowRoot ? 'webkit' : 'shim';
 }
 
 var require = function(inSrc) {
