@@ -30,7 +30,7 @@
   // Polyfill for object observation
   var files = [
     'platform/compat.js',
-    'platform/weak_map.js',
+    'side_table.js',
     'path.js',
     'model.js',
     '../dirty-check.js'
