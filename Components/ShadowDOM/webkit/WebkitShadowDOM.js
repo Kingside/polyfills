@@ -1,8 +1,7 @@
 (function(scope) {
 
   function createShadowRoot(inElement) {
-    return inElement.webkitCreateShadowRoot ? inElement.webkitCreateShadowRoot() :
-      new WebKitShadowRoot(inElement);
+    return inElement.webkitCreateShadowRoot();
   }
 
 scope.WebkitShadowDOM = {

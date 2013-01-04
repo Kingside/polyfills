@@ -3,8 +3,7 @@
 scope.flags = scope.flags || {};
 
 scope.flags.shadow = scope.flags.shadow || 
-  (window.WebKitShadowRoot || HTMLElement.prototype.webkitCreateShadowRoot ? 
-  'webkit' : 'shim');
+  (HTMLElement.prototype.webkitCreateShadowRoot ? 'webkit' : 'shim');
 
 function fetchShadowImpl(inName) {
   switch (inName) {
