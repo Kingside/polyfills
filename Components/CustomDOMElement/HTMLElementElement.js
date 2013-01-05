@@ -232,31 +232,53 @@ var elementParser = {
       });
     }
   },
-  hostRe:/(@host[^{]*)({[^{]*})/gim,
+  hostRe:/(@host[^{]*)({[\s\S]*?})/gim,
+  mediaRe: /(@media[^{]*)(({[\s\S]*?}[\s\S]*?)*)}/gim,
   applyHostStyles: function(template, name) {
     // strategy: apply a rule for each @host rule with @host replaced with
     // the component name into a stylesheet added at the top of head (so it's
     // least specific)
     if (template) {
       forEach($$(template.content, "style"), function(s) {
-        var matches, rule;
-        while ((matches = this.hostRe.exec(s.innerHTML))) {
-          rule = this.convertHostRules(matches[1], name) + " "
-              + matches[2];
-          this.hostSheet.appendChild(document.createTextNode(rule));
-        }
+        // in lieu of parser, do a 2-step regexp for media queries...
+        // process media query based rules and isolate
+        var mediaCss = this.calcMediaStyles(s.textContent, name);
+        // process other host rules
+        var cssText = s.textContent.replace(this.mediaRe, '');
+        var hostCss = this.calcHostStyles(cssText, name);
+        this.addHostRule(hostCss);
+        // add media rules last
+        this.addHostRule(mediaCss);
       }, this);
     }
   },
+  calcMediaStyles: function(inCssText, inName) {
+    var rules = [], matches, innerCss;
+    while (matches = this.mediaRe.exec(inCssText)) {
+      innerCss = this.calcHostStyles(matches[2], inName);
+      rules.push(matches[1] + '{\n' + innerCss + '\n}\n');
+    }
+    return rules.join('\n');
+  },
+  calcHostStyles: function(inCssText, inName) {
+    var rules = [], matches;
+    while (matches = this.hostRe.exec(inCssText)) {
+      rules.push(this.convertHostRules(matches[1], inName) + " "
+       + matches[2]);
+    }
+    return rules.join('\n');
+  },
+  addHostRule: function(inCssText) {
+    this.hostSheet.appendChild(document.createTextNode(inCssText));
+  },
   // convert e.g. @host to x-foo, [is=x-foo]
   convertHostRules: function(selectors, name) {
-    var o=[], parts = selectors.split(",");
-    var h = "@host";
+    var o=[], parts = selectors.split(',');
+    var h = '@host';
     parts.forEach(function(p) {
       if (p.indexOf(h) >= 0) {
         var r = p.trim();
         o.push(r.replace(h, name));
-        //o.push(r.replace(h, "[is=" + name + "]"));
       }
     });
     return o.join(", ");
