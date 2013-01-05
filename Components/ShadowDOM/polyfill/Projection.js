@@ -20,10 +20,34 @@ Projection.prototype = {
     }
   },
   add: function(inNode) {
-    // if a Changeling, add the baby instead
-    var n = inNode.baby || inNode;
-    if (n.parentNode) {
-      new Changeling(n).transplant(n);
+    var n = inNode;
+    // if n is already a Changeling, leave it be, we
+    // only project the baby anyway
+    if (n.baby) {
+      n = n.baby;
+    } else {
+      // create a Changeling placeholder for n in n's
+      // parent tree (if that tree exists)
+      if (n.parentNode) {
+        var c = new Changeling(n).transplant(n);
+        
+        // TODO(sjmiles): ad hoc 
+        //   we want a backpointer to the shadow DOM from the light DOM
+        //   for event retargetting
+        //   
+        //   we project from older shadows into younger shadows,
+        //   and then from ultimate shadow to the render tree
+        //   the position we want is the first time a node is projected.
+        //   
+        //   Note: all projections are from shadow: insertion-hosts use 
+        //   Changelings but do not project, per se. This whole situation
+        //   is confusing and too ad hoc.
+         
+        // set backpointer only if first transposition, or previous
+        // is invalid
+        n.changeling = n.changeling && n.changeling.parentNode ? 
+            n.changeling :  c;
+      }
     }
     appendExplodedChild(this.host, n);
   },

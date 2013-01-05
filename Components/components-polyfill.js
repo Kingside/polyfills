@@ -52,6 +52,17 @@ if (!flags.noOpts) {
   }
 }
 
+// process log flags
+
+if (flags.log) {
+  var logFlags = {};
+  var flags = flags.log.split(',');
+  for (var i=0, f; f=flags[i]; i++) {
+    logFlags[f] = true;
+  }
+  flags.log = window.logFlags = logFlags;
+}
+
 console.log(flags);
 
 // support exportas directive
@@ -71,12 +82,14 @@ var require = function(inSrc) {
 
 [
   "lib/lang.js",
+  "lib/dom_token_list.js",
   "ShadowDOM/shadowdom-polyfill.js",
   "ComponentDocuments/path.js",
   "ComponentDocuments/loader.js",
   "ComponentDocuments/parser.js",
   "CustomDOMElement/CustomDOMElements.js",
   "CustomDOMElement/HTMLElementElement.js",
+  "MDV/mdv-polyfill.js",
   "lib/boot.js"
 ].forEach(require);
 

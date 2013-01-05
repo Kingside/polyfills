@@ -292,7 +292,7 @@ var elementParser = {
     } else {
       h.appendChild(s);
     }
-    // force style tags hidden
+    // make sure stylesheets aren't rendered
     s.innerHTML = 'style { display: none !important; }\n';
     this.hostSheet = s;
   }
