@@ -52,6 +52,17 @@ if (!flags.noOpts) {
   }
 }
 
+// process log flags
+
+if (flags.log) {
+  var logFlags = {};
+  var flags = flags.log.split(',');
+  for (var i=0, f; f=flags[i]; i++) {
+    logFlags[f] = true;
+  }
+  flags.log = window.logFlags = logFlags;
+}
+
 console.log(flags);
 
 // support exportas directive
