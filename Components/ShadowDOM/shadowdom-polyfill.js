@@ -44,8 +44,6 @@ if (!scope.flags) {
     }
   }
 
-  console.log(flags);
-
   // support exportas directive
   if (flags.exportas) {
     window[flags.exportas] = scope;
@@ -53,11 +51,14 @@ if (!scope.flags) {
   window.__exported_components_polyfill_scope__ = scope;
 
   scope.flags = flags;
+
+  console.log(flags);
 }
 
-if (!scope.flags.shadow) {
-  scope.flags.shadow = (HTMLElement.prototype.webkitCreateShadowRoot) ? 'webkit' : 'shim';
-}
+scope.flags.shadow = scope.flags.shadow
+    || 'shim'
+    //|| (HTMLElement.prototype.webkitCreateShadowRoot ? 'webkit' : 'shim')
+    ;
 
 var require = function(inSrc) {
   document.write('<script src="' + base + inSrc + '"></script>');
