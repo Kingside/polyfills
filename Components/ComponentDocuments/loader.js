@@ -25,7 +25,7 @@ var path = scope.ComponentDocuments.path;
 var xhr = {
   ok: function(inRequest) {
     return (inRequest.status >= 200 && inRequest.status < 300)
-    || (inRequest.status == 304);
+        || (inRequest.status == 304);
   },
   load: function(url, next, context) {
     var request = new XMLHttpRequest();
@@ -62,9 +62,7 @@ var loader = {
   cache: {},
   pending: {},
   display: function(inUrl) {
-    var path = inUrl.split("/");
-    path = path.slice(-2);
-    return "..." + path.join("/");
+    return "..." + inUrl.split("/").slice(-2).join("/");
   },
   nodeUrl: function(inNode) {
     return path.resolveNodeUrl(inNode, path.nodeUrl(inNode));
@@ -135,7 +133,7 @@ var loader = {
     this.push();
     this.loadFromNode(inNode, function(err, response, url) {
       inNext(err, this.docs[url] = (this.docs[url]
-        || makeDocument(response, url)));
+         || makeDocument(response, url)));
       this.pop();
     }.bind(this));
   },

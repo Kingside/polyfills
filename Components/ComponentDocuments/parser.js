@@ -72,7 +72,7 @@ var parser = {
   injectScriptElement: function(inScript) {
     var ss = document.createElement("script");
     ss.textContent = loader.fetch(inScript);
-    document.body.appendChild(ss);
+    document.body.previousElementSibling.appendChild(ss);
   },
   parseElements: function(inDocument) {
     if (this.onElement) {

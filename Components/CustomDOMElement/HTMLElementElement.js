@@ -18,7 +18,8 @@ var componentLoader = scope.ComponentDocuments.loader.componentLoader;
 //
 // this technique allows the component scripts to be
 // viewable and debuggable in inspector scripts
-// tab (although they are all named "(program)").
+// tab (each script is named "(program)" unless
+// the user-agent supports source maps).
 
 var context;
 
@@ -34,7 +35,7 @@ var inject = function(inScript, inContext, inName, inSourceUrl) {
     + "});"
     + "\n//@ sourceURL=" + inSourceUrl + "\n"
   ;
-  document.body.appendChild(tag);
+  document.body.previousElementSibling.appendChild(tag);
 };
 
 // global necessary for script injection

@@ -15,7 +15,6 @@ var documentParser = scope.ComponentDocuments.parser;
 var elementParser = scope.CustomDOMElements.elementParser;
 var elementUpgrader = scope.CustomDOMElements.elementUpgrader;
 
-// 
 // NOTE: uses 'window' and 'document' globals
 
 scope.ready = function() {
@@ -31,7 +30,7 @@ scope.ready = function() {
 scope.webComponentsReady = function() {
   var e = document.createEvent('Event');
   e.initEvent('WebComponentsReady', true, true);
-  window.document.body.dispatchEvent(e);
+  document.body.dispatchEvent(e);
 };
 
 scope.run = function() {

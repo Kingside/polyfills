@@ -4,16 +4,21 @@
  * license that can be found in the LICENSE file.
  */
 (function() {
-  check = function() {
+  var check = function() {
     Model.dirtyCheck();
+  };
+  window.dirtyCheck = function() {
+    logFlags.data && console.group("Model.dirtyCheck()"); 
+    check();
+    logFlags.data && console.groupEnd(); 
   };
   window.addEventListener('WebComponentsReady', function() {
     // timeout keeps the profile clean
-    setTimeout(function() {
+    //setTimeout(function() {
       //console.profile('initial model dirty check');
-      check();
+      dirtyCheck();
       //console.profileEnd();
-    }, 0);
+    //}, 0);
     setInterval(check, 125);
   });
 })();

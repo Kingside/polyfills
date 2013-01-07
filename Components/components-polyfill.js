@@ -54,14 +54,14 @@ if (!flags.noOpts) {
 
 // process log flags
 
+var logFlags = {};
 if (flags.log) {
-  var logFlags = {};
-  var flags = flags.log.split(',');
-  for (var i=0, f; f=flags[i]; i++) {
+  var logs = flags.log.split(',');
+  for (var i=0, f; f=logs[i]; i++) {
     logFlags[f] = true;
   }
-  flags.log = window.logFlags = logFlags;
 }
+window.logFlags = logFlags;
 
 console.log(flags);
 
