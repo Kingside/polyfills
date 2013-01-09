@@ -79,7 +79,7 @@ var finalize = function(inElement, inDefinition) {
       // polyfill UA parsing by instantiating any new custom elements
       // reported by MutationObservers. Each root is self-contained,
       // and so we must set up an observer for each one.
-      watchDOM(root);
+      //watchDOM(root);
       // upgrade elements now so that references created
       // during distribution do not become stale.
       upgradeAll(root);
