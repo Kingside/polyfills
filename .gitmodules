@@ -9,4 +9,4 @@
 	url = https://github.com/web-animations/web-animations-js.git
 [submodule "Components/MDV/mdv-polyfill"]
 	path = Components/MDV/mdv-polyfill
-	url = https://github.com/toolkitchen/mdv-polyfill.git
+	url = https://github.com/toolkitchen/mdv.git
