@@ -306,8 +306,8 @@ var elementUpgrader = {
   },
   go: function() {
     CustomDOMElements.upgradeElements = this._upgradeElements;
-    CustomDOMElements.upgradeAll(document);
     CustomDOMElements.watchDOM(document);
+    CustomDOMElements.upgradeAll(document);
   }
 };
 
