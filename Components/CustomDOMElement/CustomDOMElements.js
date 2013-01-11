@@ -338,12 +338,11 @@ var handleDOMMutations = function(mutations) {
   });
 }
 
-// TODO(sorvell): remove knowledge of state of shadowDOM impl.
-var upgradeDOMChanges = function(inElement) {
-  if (ShadowDOM.shim) {
-    shimUpgradeChanges();
-  } else {
-    upgradeAll(inElement);
+var DOMObserver;
+var watchDOM = function(inNode) {
+  if (MutationObserver) {
+    DOMObserver = new MutationObserver(handleDOMMutations);
+    DOMObserver.observe(inNode, {childList: true, subtree: true});
   }
 }
 
@@ -354,12 +353,12 @@ var watchShadowDOM = function(inRoot) {
   }
 }
 
-var DOMObserver;
-
-var watchDOM = function(inNode) {
-  if (MutationObserver) {
-    DOMObserver = new MutationObserver(handleDOMMutations);
-    DOMObserver.observe(inNode, {childList: true, subtree: true});
+// TODO(sorvell): remove knowledge of state of shadowDOM impl.
+var upgradeDOMChanges = function(inElement) {
+  if (ShadowDOM.shim) {
+    shimUpgradeChanges();
+  } else {
+    upgradeAll(inElement);
   }
 }
 
