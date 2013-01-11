@@ -21,9 +21,11 @@ var LightDOM = function(inNode) {
     }
   });
   */
+  /*
   inNode.appendChild = function(inNode) {
     return this.lightDOM.appendChild(inNode);
   };
+  */
   // return the fragment
   return inNode.lightDOM;
 };
