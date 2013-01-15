@@ -7,6 +7,3 @@
 [submodule "web-animations-js"]
 	path = web-animations-js
 	url = https://github.com/web-animations/web-animations-js.git
-[submodule "Components/MDV/mdv-polyfill"]
-	path = Components/MDV/mdv-polyfill
-	url = https://github.com/toolkitchen/mdv.git
